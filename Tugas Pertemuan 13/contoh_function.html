@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Function Lebih Kompleks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background: #f7f9fc;
+            color: #333;
+        }
+        .card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            max-width: 700px;
+        }
+        button {
+            margin-top: 1rem;
+            padding: 0.75rem 1.2rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #eef2f7;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Contoh Program Function yang Lebih Kompleks</h1>
+        <p>Tekan tombol untuk menjalankan fungsi dan melihat hasilnya.</p>
+        <button id="runExample">Jalankan Contoh</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function hitungStatistik(data = [], options = {}) {
+            const defaultOptions = {
+                includeMin: true,
+                includeMax: true,
+                includeAverage: true,
+                round: 2
+            };
+            const settings = { ...defaultOptions, ...options };
+
+            if (!Array.isArray(data) || data.length === 0) {
+                return {
+                    error: 'Data harus berupa array angka dan tidak boleh kosong.'
+                };
+            }
+
+            const numbers = data.filter(item => typeof item === 'number');
+            const total = numbers.reduce((sum, value) => sum + value, 0);
+            const average = total / numbers.length;
+
+            const result = {
+                count: numbers.length,
+                total,
+                average: Number(average.toFixed(settings.round))
+            };
+
+            if (settings.includeMin) {
+                result.min = Math.min(...numbers);
+            }
+            if (settings.includeMax) {
+                result.max = Math.max(...numbers);
+            }
+
+            return result;
+        }
+
+        function tampilkanHasil(data, options, callback) {
+            const statistik = hitungStatistik(data, options);
+            const pesan = callback(statistik);
+            return pesan;
+        }
+
+        function buatPesan(statistik) {
+            if (statistik.error) {
+                return `<p style="color: red;">Error: ${statistik.error}</p>`;
+            }
+
+            return `
+                <h2>Hasil Statistik</h2>
+                <ul>
+                    <li>Jumlah data: ${statistik.count}</li>
+                    <li>Jumlah total: ${statistik.total}</li>
+                    <li>Rata-rata: ${statistik.average}</li>
+                    ${statistik.min !== undefined ? `<li>Nilai terkecil: ${statistik.min}</li>` : ''}
+                    ${statistik.max !== undefined ? `<li>Nilai terbesar: ${statistik.max}</li>` : ''}
+                </ul>
+            `;
+        }
+
+        document.getElementById('runExample').addEventListener('click', () => {
+            const contohData = [12, 24, 5, 18, 37, 49, 8, 20];
+            const options = { includeMin: true, includeMax: true, round: 1 };
+            const output = tampilkanHasil(contohData, options, buatPesan);
+
+            document.getElementById('output').innerHTML = output +
+                `<pre>${JSON.stringify({ contohData, options, hasil: hitungStatistik(contohData, options) }, null, 2)}</pre>`;
+        });
+    </script>
+</body>
+</html>

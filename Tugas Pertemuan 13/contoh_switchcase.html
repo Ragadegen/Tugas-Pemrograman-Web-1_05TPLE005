@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Switch Case Kompleks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        input, select, button {
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            margin-top: 20px;
+            display: none;
+        }
+        .output.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Program Switch Case Kompleks</h1>
+        
+        <div>
+            <h3>1. Kalkulator dengan Switch Case</h3>
+            <label>Pilih Operasi:</label>
+            <select id="operasi">
+                <option value="tambah">Tambah (+)</option>
+                <option value="kurang">Kurang (-)</option>
+                <option value="kali">Kali (*)</option>
+                <option value="bagi">Bagi (/)</option>
+                <option value="modulo">Modulo (%)</option>
+            </select>
+            <input type="number" id="angka1" placeholder="Angka 1">
+            <input type="number" id="angka2" placeholder="Angka 2">
+            <button onclick="kalkulator()">Hitung</button>
+            <div id="output1" class="output"></div>
+        </div>
+
+        <hr>
+
+        <div>
+            <h3>2. Grade Nilai Perulangan</h3>
+            <label>Masukkan Nilai (0-100):</label>
+            <input type="number" id="nilai" placeholder="Nilai" min="0" max="100">
+            <button onclick="gradeNilai()">Tentukan Grade</button>
+            <div id="output2" class="output"></div>
+        </div>
+
+        <hr>
+
+        <div>
+            <h3>3. Status Hari Kerja</h3>
+            <label>Pilih Hari:</label>
+            <select id="hari">
+                <option value="1">Senin</option>
+                <option value="2">Selasa</option>
+                <option value="3">Rabu</option>
+                <option value="4">Kamis</option>
+                <option value="5">Jumat</option>
+                <option value="6">Sabtu</option>
+                <option value="7">Minggu</option>
+            </select>
+            <button onclick="statusHari()">Cek Status</button>
+            <div id="output3" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi Kalkulator dengan Switch Case
+        function kalkulator() {
+            const operasi = document.getElementById('operasi').value;
+            const angka1 = parseFloat(document.getElementById('angka1').value);
+            const angka2 = parseFloat(document.getElementById('angka2').value);
+            const output = document.getElementById('output1');
+
+            if (isNaN(angka1) || isNaN(angka2)) {
+                output.innerHTML = '<span style="color: red;">⚠️ Masukkan kedua angka!</span>';
+                output.classList.add('show');
+                return;
+            }
+
+            let hasil;
+            switch(operasi) {
+                case 'tambah':
+                    hasil = angka1 + angka2;
+                    output.innerHTML = `<strong>${angka1} + ${angka2} = ${hasil}</strong>`;
+                    break;
+                case 'kurang':
+                    hasil = angka1 - angka2;
+                    output.innerHTML = `<strong>${angka1} - ${angka2} = ${hasil}</strong>`;
+                    break;
+                case 'kali':
+                    hasil = angka1 * angka2;
+                    output.innerHTML = `<strong>${angka1} × ${angka2} = ${hasil}</strong>`;
+                    break;
+                case 'bagi':
+                    if (angka2 === 0) {
+                        output.innerHTML = '<span style="color: red;">⚠️ Tidak bisa dibagi dengan 0!</span>';
+                    } else {
+                        hasil = (angka1 / angka2).toFixed(2);
+                        output.innerHTML = `<strong>${angka1} ÷ ${angka2} = ${hasil}</strong>`;
+                    }
+                    break;
+                case 'modulo':
+                    if (angka2 === 0) {
+                        output.innerHTML = '<span style="color: red;">⚠️ Tidak bisa modulo dengan 0!</span>';
+                    } else {
+                        hasil = angka1 % angka2;
+                        output.innerHTML = `<strong>${angka1} % ${angka2} = ${hasil}</strong>`;
+                    }
+                    break;
+                default:
+                    output.innerHTML = '<span style="color: red;">⚠️ Operasi tidak valid!</span>';
+            }
+            output.classList.add('show');
+        }
+
+        // Fungsi Grade Nilai dengan Switch Case Kompleks
+        function gradeNilai() {
+            const nilai = parseInt(document.getElementById('nilai').value);
+            const output = document.getElementById('output2');
+
+            if (isNaN(nilai) || nilai < 0 || nilai > 100) {
+                output.innerHTML = '<span style="color: red;">⚠️ Masukkan nilai antara 0-100!</span>';
+                output.classList.add('show');
+                return;
+            }
+
+            let grade, keterangan, warna;
+
+            // Switch case berdasarkan range nilai
+            switch(true) {
+                case nilai >= 85:
+                    grade = 'A';
+                    keterangan = 'Sangat Baik';
+                    warna = '#2ecc71';
+                    break;
+                case nilai >= 75:
+                    grade = 'B';
+                    keterangan = 'Baik';
+                    warna = '#3498db';
+                    break;
+                case nilai >= 65:
+                    grade = 'C';
+                    keterangan = 'Cukup';
+                    warna = '#f39c12';
+                    break;
+                case nilai >= 55:
+                    grade = 'D';
+                    keterangan = 'Kurang';
+                    warna = '#e74c3c';
+                    break;
+                default:
+                    grade = 'E';
+                    keterangan = 'Sangat Kurang';
+                    warna = '#c0392b';
+            }
+
+            output.innerHTML = `
+                <div style="background-color: ${warna}; color: white; padding: 15px; border-radius: 4px; text-align: center;">
+                    <p><strong>Nilai: ${nilai}</strong></p>
+                    <p><strong>Grade: ${grade}</strong></p>
+                    <p><strong>Keterangan: ${keterangan}</strong></p>
+                </div>
+            `;
+            output.classList.add('show');
+        }
+
+        // Fungsi Status Hari dengan Switch Case
+        function statusHari() {
+            const hariNum = document.getElementById('hari').value;
+            const output = document.getElementById('output3');
+            
+            let namaHari, jenisHari, emoji;
+
+            switch(parseInt(hariNum)) {
+                case 1:
+                    namaHari = 'Senin';
+                    jenisHari = 'Hari Kerja';
+                    emoji = '💼';
+                    break;
+                case 2:
+                    namaHari = 'Selasa';
+                    jenisHari = 'Hari Kerja';
+                    emoji = '💼';
+                    break;
+                case 3:
+                    namaHari = 'Rabu';
+                    jenisHari = 'Hari Kerja';
+                    emoji = '💼';
+                    break;
+                case 4:
+                    namaHari = 'Kamis';
+                    jenisHari = 'Hari Kerja';
+                    emoji = '💼';
+                    break;
+                case 5:
+                    namaHari = 'Jumat';
+                    jenisHari = 'Hari Kerja';
+                    emoji = '💼';
+                    break;
+                case 6:
+                    namaHari = 'Sabtu';
+                    jenisHari = 'Akhir Pekan';
+                    emoji = '🏖️';
+                    break;
+                case 7:
+                    namaHari = 'Minggu';
+                    jenisHari = 'Akhir Pekan';
+                    emoji = '🏖️';
+                    break;
+                default:
+                    namaHari = 'Tidak Dikenal';
+                    jenisHari = 'Tidak Dikenal';
+                    emoji = '❓';
+            }
+
+            output.innerHTML = `
+                <p><strong>${emoji} ${namaHari}</strong></p>
+                <p>Status: <strong>${jenisHari}</strong></p>
+            `;
+            output.classList.add('show');
+        }
+    </script>
+</body>
+</html>
