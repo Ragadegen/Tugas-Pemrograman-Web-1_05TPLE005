@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Operator JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .hasil {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 4px solid #4CAF50;
+            margin-top: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+        .hasil.show {
+            display: block;
+        }
+        .hasil-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .hasil-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .hasil-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .hasil-value {
+            color: #4CAF50;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Aplikasi Operator JavaScript</h1>
+        
+        <div class="input-group">
+            <label for="nilai1">Masukkan Nilai 1:</label>
+            <input type="number" id="nilai1" placeholder="Contoh: 10" value="10">
+        </div>
+        
+        <div class="input-group">
+            <label for="nilai2">Masukkan Nilai 2:</label>
+            <input type="number" id="nilai2" placeholder="Contoh: 5" value="5">
+        </div>
+        
+        <button onclick="hitungOperator()">Hitung Semua Operator</button>
+        
+        <div id="hasil" class="hasil">
+            <h2>Hasil Perhitungan:</h2>
+            
+            <div class="hasil-item">
+                <div class="hasil-label">Operator Aritmatika:</div>
+                <div class="hasil-value">
+                    Penjumlahan (+): <span id="tambah"></span><br>
+                    Pengurangan (-): <span id="kurang"></span><br>
+                    Perkalian (*): <span id="kali"></span><br>
+                    Pembagian (/): <span id="bagi"></span><br>
+                    Modulo (%): <span id="modulo"></span><br>
+                    Pangkat (**): <span id="pangkat"></span>
+                </div>
+            </div>
+            
+            <div class="hasil-item">
+                <div class="hasil-label">Operator Penugasan:</div>
+                <div class="hasil-value">
+                    x = nilai1: <span id="penugasan1"></span><br>
+                    x += nilai2: <span id="penugasan2"></span><br>
+                    x -= nilai2: <span id="penugasan3"></span><br>
+                    x *= nilai2: <span id="penugasan4"></span><br>
+                    x /= nilai2: <span id="penugasan5"></span>
+                </div>
+            </div>
+            
+            <div class="hasil-item">
+                <div class="hasil-label">Operator Pembanding:</div>
+                <div class="hasil-value">
+                    nilai1 == nilai2: <span id="sama"></span><br>
+                    nilai1 === nilai2: <span id="samaTegas"></span><br>
+                    nilai1 != nilai2: <span id="tidakSama"></span><br>
+                    nilai1 !== nilai2: <span id="tidakSamaTegas"></span><br>
+                    nilai1 > nilai2: <span id="lebihBesar"></span><br>
+                    nilai1 < nilai2: <span id="lebihKecil"></span><br>
+                    nilai1 >= nilai2: <span id="lebihBesarSama"></span><br>
+                    nilai1 <= nilai2: <span id="lebihKecilSama"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function hitungOperator() {
+            // Ambil nilai input
+            let nilai1 = parseFloat(document.getElementById('nilai1').value);
+            let nilai2 = parseFloat(document.getElementById('nilai2').value);
+            
+            // Validasi input
+            if (isNaN(nilai1) || isNaN(nilai2)) {
+                alert('Masukkan angka yang valid!');
+                return;
+            }
+            
+            // Operator Aritmatika
+            let tambah = nilai1 + nilai2;
+            let kurang = nilai1 - nilai2;
+            let kali = nilai1 * nilai2;
+            let bagi = nilai1 / nilai2;
+            let modulo = nilai1 % nilai2;
+            let pangkat = nilai1 ** nilai2;
+            
+            // Operator Penugasan
+            let x = nilai1;
+            let penugasan1 = x;
+            x += nilai2;
+            let penugasan2 = x;
+            x -= nilai2;
+            let penugasan3 = x;
+            x *= nilai2;
+            let penugasan4 = x;
+            x /= nilai2;
+            let penugasan5 = x;
+            
+            // Operator Pembanding
+            let sama = nilai1 == nilai2;
+            let samaTegas = nilai1 === nilai2;
+            let tidakSama = nilai1 != nilai2;
+            let tidakSamaTegas = nilai1 !== nilai2;
+            let lebihBesar = nilai1 > nilai2;
+            let lebihKecil = nilai1 < nilai2;
+            let lebihBesarSama = nilai1 >= nilai2;
+            let lebihKecilSama = nilai1 <= nilai2;
+            
+            // Tampilkan hasil
+            document.getElementById('tambah').textContent = tambah;
+            document.getElementById('kurang').textContent = kurang;
+            document.getElementById('kali').textContent = kali;
+            document.getElementById('bagi').textContent = bagi.toFixed(2);
+            document.getElementById('modulo').textContent = modulo;
+            document.getElementById('pangkat').textContent = pangkat;
+            
+            document.getElementById('penugasan1').textContent = penugasan1;
+            document.getElementById('penugasan2').textContent = penugasan2;
+            document.getElementById('penugasan3').textContent = penugasan3;
+            document.getElementById('penugasan4').textContent = penugasan4;
+            document.getElementById('penugasan5').textContent = penugasan5.toFixed(2);
+            
+            document.getElementById('sama').textContent = sama;
+            document.getElementById('samaTegas').textContent = samaTegas;
+            document.getElementById('tidakSama').textContent = tidakSama;
+            document.getElementById('tidakSamaTegas').textContent = tidakSamaTegas;
+            document.getElementById('lebihBesar').textContent = lebihBesar;
+            document.getElementById('lebihKecil').textContent = lebihKecil;
+            document.getElementById('lebihBesarSama').textContent = lebihBesarSama;
+            document.getElementById('lebihKecilSama').textContent = lebihKecilSama;
+            
+            // Tampilkan box hasil
+            document.getElementById('hasil').classList.add('show');
+        }
+        
+        // Jalankan saat halaman dimuat
+        window.onload = function() {
+            hitungOperator();
+        };
+    </script>
+</body>
+</html>
